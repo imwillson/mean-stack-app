@@ -1,0 +1,15 @@
+What did you learn? 
+
+Express is a framework that uses connectJS to route requests. Allows to run multiple functions through one port. 
+
+MVC: Controller does the views
+
+Why ejs?  that's the view engine, it's for us to pass our data to a template, aka rendering views
+
+json file in the beginnign before isntall packages .
+
+next function() asynchrnous
+
+app.get
+app.post 
+app.set 

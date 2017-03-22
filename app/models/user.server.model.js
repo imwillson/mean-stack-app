@@ -1,0 +1,76 @@
+// var mongoose = require('mongoose'),
+// 	Schema = mongoose.Schema; //assuming that i'm creaing schema
+
+// var UserSchema = new Schema({
+// 	name: String,
+// 	email: String,
+// 	username: {
+// 		type: String,
+// 		unique: true
+// 	},
+// 	password: String,
+
+// }); //Schema is a constructor object
+
+// mongoose.model('User', UserSchema);
+
+var mongoose = require('mongoose'),
+    crypto = require('crypto'),
+    Schema = mongoose.Schema;
+
+var UserSchema = new Schema({
+    name: String,
+    email: String,
+    username: {
+        type: String,
+        trim: true,
+        unique: true
+    },
+    password: String,
+    provider: String,
+    providerId: String,
+    providerData: {},
+    todos: {}//we will use this in the next tutorial to store TODOs
+});
+
+UserSchema.pre('save',
+    function(next) {
+        if (this.password) {
+            var md5 = crypto.createHash('md5');
+            this.password = md5.update(this.password).digest('hex');
+        }
+
+        next();
+    }
+);
+
+UserSchema.methods.authenticate = function(password) {
+    var md5 = crypto.createHash('md5');
+    md5 = md5.update(password).digest('hex');
+
+    return this.password === md5;
+}; // what is this method doing? LOOK UP DIGEST
+
+UserSchema.statics.findUniqueUsername = function(username, suffix, callback) {
+    var _this = this;
+    var possibleUsername = username + (suffix || '');
+
+    _this.findOne(
+        {username: possibleUsername},
+        function(err, user) {
+            if (!err) {
+                if (!user) {
+                    callback(possibleUsername);
+                }
+                else {
+                    return _this.findUniqueUsername(username, (suffix || 0) + 1, callback);
+                }
+            }
+            else {
+                callback(null);
+            }
+        }
+    );
+}; //questions about this method
+
+mongoose.model('User', UserSchema);
