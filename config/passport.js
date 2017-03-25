@@ -18,5 +18,7 @@ module.exports = function() {
         );
     });
 
+    //here we require all the strategies being used to authenticate
     require('./strategies/local.js')();
+    require('./strategies/facebook.js')(); 
 };

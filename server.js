@@ -21,7 +21,7 @@ var db = mongoose(),
     passport = passport();
 
 
-app.listen(config.port);
+app.listen(config.port); //goes into development files 
 
 module.exports = app;
 console.log(process.env.NODE_ENV  + ' server running at http://localhost:' + config.port);

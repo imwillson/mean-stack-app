@@ -42,5 +42,19 @@ module.exports = function(app) {
             failureFlash: true
         }));
 
-    app.get('/logout', users.logout);    
+    app.get('/logout', users.logout);  
+
+    //start the user authentication process
+    app.get('/oauth/facebook', passport.authenticate('facebook', {
+        failureRedirect: '/login',
+        scope:['email']
+    }));
+
+    //finish the authentication process
+    app.get('/oauth/facebook/callback', passport.authenticate('facebook', {
+        failureRedirect: '/login',
+        successRedirect: '/',
+        scope:['email']
+    }));
+  
 };
