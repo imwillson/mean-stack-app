@@ -56,5 +56,15 @@ module.exports = function(app) {
         successRedirect: '/',
         scope:['email']
     }));
+
+    //twitter authentication
+    app.get('/oauth/twitter', passport.authenticate('twitter', {
+        failureRedirect: '/login'
+    }));
+
+    app.get('/oauth/twitter/callback', passport.authenticate('twitter', {
+        failureRedirect: '/login',
+        successRedirect: '/'
+    }));
   
 };
