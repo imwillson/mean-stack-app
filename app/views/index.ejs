@@ -5,6 +5,16 @@
 </head>
 
 <body>
+
+	<!--added for routing -->
+	<section ng-view></section>
+
+	<script type="text/javascript">
+    	window.user = <%- user || 'null' %>;
+	</script> 
+	<!-- //will render the user object as a json  -->
+
+
 	<% if ( user ) { %>
 		<h2>Hello <%=user%> </h2>
 		<a href="/logout">Logout</a>
@@ -18,5 +28,20 @@
 
     <h1><%= title %></h1>
     <div><img src="img/logo.jpg" alt="Hack Hands logo"></div>
+
+    <!-- you includ all these scripts so that angular can modify ur html-->
+    <script type="text/javascript" src="/js/angular/angular.js"></script> 
+
+    <!-- angular routing== different url paths to templates -->
+    <script type="text/javascript" src="/js/angular-route/angular-route.min.js"></script> 
+
+    <script type="text/javascript" src="/example/controllers/example.client.controller.js"></script>
+
+    <script type="text/javascript" src="/example/example.client.module.js"></script>
+    <script type="text/javascript" src="/users/services/authentication.client.service.js"></script>
+
+
+    <script type="text/javascript" src="/application.js"></script>
+
 </body>
 </html>
